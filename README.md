@@ -1,6 +1,6 @@
 # Code Debugging Tool
 
-A Python-based tool designed to identify common syntax and logical errors in code.
+This tool performs both syntax validation and basic logical analysis.
 
 ## Features
 - Detects missing parentheses
