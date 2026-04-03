@@ -1,28 +1,36 @@
-def check_code(code):
+def check_syntax(code):
     errors = []
-
-    if "==" in code and "if" not in code:
-        errors.append("Possible logical error: '==' used without condition")
-
-    if "(" in code and ")" not in code:
-        errors.append("Syntax Error: Missing closing parenthesis")
-
-    if ":" in code and "if" not in code and "for" not in code:
-        errors.append("Syntax Error: ':' used incorrectly")
-
-    if len(errors) == 0:
-        return "No obvious errors found"
-    
+    try:
+        compile(code, '<string>', 'exec')
+    except SyntaxError as e:
+        errors.append(f"Syntax Error: {e}")
     return errors
 
 
-code_input = input("Enter your code: ")
-result = check_code(code_input)
+def check_logic(code):
+    issues = []
 
-print("Result:")
+    if "==" in code and "if" not in code:
+        issues.append("Possible logic issue: '==' used without condition")
+
+    if "(" in code and ")" not in code:
+        issues.append("Missing closing parenthesis")
+
+    return issues
+
+
+def analyze_code(code):
+    syntax_errors = check_syntax(code)
+    logic_issues = check_logic(code)
+
+    return {
+        "syntax_errors": syntax_errors,
+        "logic_issues": logic_issues
+    }
+
+
+code_input = input("Enter your code:\n")
+result = analyze_code(code_input)
+
+print("\nAnalysis Result:")
 print(result)
-
-try:
-    compile(code, '<string>', 'exec')
-except SyntaxError as e:
-    errors.append(f"Syntax Error: {e}")
