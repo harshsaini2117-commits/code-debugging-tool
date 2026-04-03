@@ -21,3 +21,8 @@ result = check_code(code_input)
 
 print("Result:")
 print(result)
+
+try:
+    compile(code, '<string>', 'exec')
+except SyntaxError as e:
+    errors.append(f"Syntax Error: {e}")
